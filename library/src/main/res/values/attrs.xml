@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--CircleProgress-->
+    <declare-styleable name="CircleProgress">
+        <attr name="radius" format="dimension"/>
+        <attr name="stroke_width" format="dimension"/>
+        <attr name="back_circle_color" format="color"/>
+        <attr name="front_arc_color" format="color"/>
+        <attr name="text_visibility" format="boolean"/>
+    </declare-styleable>
+
+    <!--PTRListView-->
+    <declare-styleable name="PTRListViewHeader">
+        <attr name="header_radius" format="dimension"/>
+        <attr name="header_width" format="dimension"/>
+        <attr name="back_header_color" format="color"/>
+        <attr name="front_header_color" format="color"/>
+        <attr name="text_header_visibility" format="boolean"/>
+    </declare-styleable>
+
+    <!--GifView-->
+    <declare-styleable name="GifView">
+        <attr name="gif" format="reference" />
+        <attr name="paused" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomTheme">
+        <attr name="gifViewStyle" format="reference" />
+    </declare-styleable>
+</resources>

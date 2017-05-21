@@ -1,0 +1,4 @@
+<resources>
+    <!--PullToRefreshView-->
+    <color name="subscribe_disabled_textview">#ff999999</color>
+</resources>

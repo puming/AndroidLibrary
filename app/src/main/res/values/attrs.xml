@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<declare-styleable name="CircleProgress">-->
+        <!--<attr name="radius" format="dimension"/>-->
+        <!--<attr name="stroke_width" format="dimension"/>-->
+        <!--<attr name="back_circle_color" format="color"/>-->
+        <!--<attr name="front_arc_color" format="color"/>-->
+        <!--<attr name="text_visibility" format="boolean"/>-->
+    <!--</declare-styleable>-->
+</resources>
