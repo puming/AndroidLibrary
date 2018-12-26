@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--zxing-->
+    <color name="qr_contents_text">#000000</color>
+    <color name="qr_encode_view">#ffffff</color>
+    <color name="qr_possible_result_points">#ffbd21</color>
+    <color name="qr_result_minor_text">#c0c0c0</color>
+    <color name="qr_result_points">#99cc00</color>
+    <color name="qr_result_text">#ffffff</color>
+    <color name="qr_result_view">#000000</color>
+    <color name="qr_status_text">#ffffff</color>
+    <color name="qr_viewfinder_mask">#50000000</color>
+    <color name="qr_react">#ffffff</color>
+    <color name="qr_scanLineColor">#ffffff</color>
+    <color name="qr_defaultColor">#ffffff</color>
+
+    <color name="qr_five_black">#7f000000</color>
+    <color name="qr_colorPrimary">@color/qr_five_black</color>
+    <color name="qr_colorAccent">@color/qr_five_black</color>
+
+</resources>
