@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.zxing.WriterException;
+import com.qrcode.android.CaptureActivity;
 import com.qrcode.common.Constant;
 import com.qrcode.encode.CodeCreator;
 
@@ -42,6 +43,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qr_activity_sample);
         initView();
+        ARouter.init(getApplication());
     }
 
     private void initView() {
@@ -83,8 +85,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
         // 二维码扫码
-//        Intent intent = new Intent(SampleActivity.this, CaptureActivity.class);
-//        startActivityForResult(intent, REQ_QR_CODE);
+        Intent intent = new Intent(SampleActivity.this, CaptureActivity.class);
+        startActivityForResult(intent, REQ_QR_CODE);
         ARouter.getInstance().build(RouterPath.QRCODE_MAIN_CAPTUREACTIVITY).navigation(this, REQ_QR_CODE);
     }
 

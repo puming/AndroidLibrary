@@ -1,11 +1,15 @@
 package com.qrcode.android;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatImageView;
@@ -34,6 +38,8 @@ import com.qrcode.decode.DecodeImgThread;
 import com.qrcode.decode.ImageUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author pm
@@ -42,6 +48,8 @@ import java.io.IOException;
  */
 @Route(path = RouterPath.QRCODE_MAIN_CAPTUREACTIVITY)
 public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.Callback, View.OnClickListener {
+    private static final int REQ_PERM_CODE = 0x100;
+
     private static final String TAG = CaptureActivity.class.getSimpleName();
 
     public ZxingConfig config;
@@ -107,6 +115,20 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
         beepManager = new BeepManager(this);
         beepManager.setPlayBeep(config.isPlayBeep());
         beepManager.setVibrate(config.isShake());
+        ArrayList<String> permissions = new ArrayList<>(2);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            // 申请权限
+            permissions.add(Manifest.permission.CAMERA);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        if (!permissions.isEmpty()) {
+            String[] array = permissions.toArray(new String[permissions.size()]);
+            ActivityCompat.requestPermissions(CaptureActivity.this, array, REQ_PERM_CODE);
+        }
 
     }
 
@@ -153,7 +175,7 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
-                if(itemId == R.id.open_photo){
+                if (itemId == R.id.open_photo) {
                     /*打开相册*/
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_PICK);
@@ -212,8 +234,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
         intent.putExtra(Constant.CODED_CONTENT, rawResult.getText());
         setResult(RESULT_OK, intent);
         this.finish();
-
-
     }
 
 
@@ -237,7 +257,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
         surfaceHolder = previewView.getHolder();
         if (hasSurface) {
-
             initCamera(surfaceHolder);
         } else {
             // 重置callback，等待surfaceCreated()来初始化camera
@@ -306,9 +325,12 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        boolean hasPermission = ContextCompat.checkSelfPermission(CaptureActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
         if (!hasSurface) {
             hasSurface = true;
-            initCamera(holder);
+            if (hasPermission) {
+                initCamera(holder);
+            }
         }
     }
 
@@ -332,8 +354,6 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
             /*切换闪光灯*/
             cameraManager.switchFlashLight(handler);
         }
-
-
     }
 
 
@@ -357,6 +377,25 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
             }).run();
 
 
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQ_PERM_CODE) {
+            boolean allGranted = true;
+            for (int grant : grantResults) {
+                if (grant != PackageManager.PERMISSION_GRANTED) {
+                    allGranted = false;
+                }
+            }
+
+            if (allGranted) {
+            } else {
+                Toast.makeText(this, "请打开相机权限和存取权限", Toast.LENGTH_SHORT).show();
+                finish();
+            }
         }
     }
 

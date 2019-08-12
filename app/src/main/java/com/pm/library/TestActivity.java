@@ -11,6 +11,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.library.widght.ReFlashListView;
+import com.pm.hybridsdk.core.HybridConstant;
+import com.pm.hybridsdk.ui.HybridWebViewActivity;
+import com.qrcode.SampleActivity;
 
 import java.util.ArrayList;
 
@@ -37,7 +40,11 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Class aClass = mAdapter.getItem(position);
-                TestActivity.this.startActivity(new Intent(TestActivity.this,aClass));
+                Intent intent = new Intent(TestActivity.this, aClass);
+                if(HybridWebViewActivity.class.isAssignableFrom(aClass)){
+                    intent.putExtra(HybridConstant.INTENT_EXTRA_KEY_TOPAGE,"http://www.pmbloger.com/");
+                }
+                TestActivity.this.startActivity(intent);
             }
         });
     }
@@ -49,6 +56,8 @@ public class TestActivity extends AppCompatActivity {
         mActivitys.add(IndexableListViewActivity.class);
         mActivitys.add(PermissionActivity.class);
 //        mActivitys.add(ReFlashListViewActivity.class);
+        mActivitys.add(SampleActivity.class);
+        mActivitys.add(HybridWebViewActivity.class);
     }
 
     private void initialize() {

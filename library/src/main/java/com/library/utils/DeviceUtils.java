@@ -19,6 +19,7 @@ package com.library.utils;
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -51,12 +52,16 @@ public class DeviceUtils {
         return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
+    @SuppressLint("MissingPermission")
     public static String getIMEI(Context ctx) {
+        //todo Permission check
         return ((TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
     }
 
+    @SuppressLint("MissingPermission")
     public static String getIMSI(Context ctx) {
         TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+        //todo Permission check
         return tm.getSubscriberId() != null ? tm.getSubscriberId() : null;
     }
 

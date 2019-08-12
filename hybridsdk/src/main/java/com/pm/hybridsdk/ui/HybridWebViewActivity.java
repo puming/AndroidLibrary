@@ -1,5 +1,6 @@
 package com.pm.hybridsdk.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.webkit.ValueCallback;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.pm.hybridsdk.R;
 import com.pm.hybridsdk.core.HybridAjaxService;
@@ -23,6 +25,8 @@ import com.pm.hybridsdk.param.HybridParamShowHeader;
 import com.pm.hybridsdk.param.HybridParamShowLoading;
 import com.pm.hybridsdk.param.HybridParamUpdateHeader;
 import com.pm.hybridsdk.widget.NavgationView;
+import com.qrcode.LaunchDelegate;
+import com.qrcode.common.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +68,12 @@ public class HybridWebViewActivity extends HybridBaseActivity {
                     } else {
                         finish();
                     }
+                }
+            }).setVisibility(View.VISIBLE);
+            mNavgationView.appendNavgation(NavgationView.Direct.RIGHT, "", R.drawable.ic_scan, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LaunchDelegate.toActivity(HybridWebViewActivity.this);
                 }
             }).setVisibility(View.VISIBLE);
         } else {
@@ -123,6 +133,27 @@ public class HybridWebViewActivity extends HybridBaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         Log.e("vane", "HybridWebViewActivity onCreate");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case LaunchDelegate.REQ_QR_CODE:
+                if (resultCode == RESULT_OK) {
+                    if (data != null) {
+                        Bundle bundle = data.getExtras();
+                        if (bundle == null) {
+                            return;
+                        }
+                        String result = bundle.getString(Constant.CODED_CONTENT);
+                        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
