@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'maven'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -26,12 +26,33 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation "com.android.support:support-annotations:$supportLibraryVersion"
-    api 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'de.greenrobot:eventbus:3.0.0-beta1'
     //    compile 'com.facebook.fresco:fresco:0.10.0'
     implementation 'com.facebook.fresco:fresco:1.11.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.0.2'
-    implementation project(':qrcode')
+//    implementation project(':qrcode')
+//    implementation(name: 'qrcode-release', ext: 'aar')
+    implementation 'com.pm.qrcode:qrcode:0.1.1'
+}
+
+group = 'com.pm.hybridsdk'
+version = '0.0.1'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            /* repository(url: "http://www.xxx.com/repos") {
+                authentication(userName: "admin", password: "admin")
+             }*/
+            //本地的Maven地址设置为/home/pm/repos
+            repository(url: uri('../repositories'))
+//            pom.groupId = group
+            pom.version = version
+            pom.artifactId = 'hybridsdk'
+        }
+    }
 }

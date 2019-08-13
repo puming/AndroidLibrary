@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -42,4 +43,23 @@ dependencies {
         exclude module:"support-v4"
     }
     annotationProcessor "com.alibaba:arouter-compiler:$arouterCompilerVersion"
+}
+
+group = 'com.pm.qrcode'
+version = '0.1.1'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            /* repository(url: "http://www.xxx.com/repos") {
+                authentication(userName: "admin", password: "admin")
+             }*/
+            //本地的Maven地址
+            repository(url: uri('../repositories'))
+//            pom.groupId = group
+            pom.version  = version
+            pom.artifactId = 'qrcode'
+        }
+    }
 }

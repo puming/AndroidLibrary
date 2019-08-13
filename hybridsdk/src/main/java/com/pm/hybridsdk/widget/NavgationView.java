@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.pm.hybridsdk.R;
 
 /**
@@ -22,7 +23,7 @@ public class NavgationView extends FrameLayout {
     private ViewGroup mLeftView, mRightView, mTitleGroup;
     private TextView mTitleView, mSubTitleView;
     private LayoutInflater mInflater;
-    private DraweeView mLeftIcon, mRightIcon;
+    private SimpleDraweeView mLeftIcon, mRightIcon;
 
     public NavgationView(Context context) {
         super(context);
@@ -47,8 +48,8 @@ public class NavgationView extends FrameLayout {
         mTitleGroup = (ViewGroup) findViewById(R.id.hybrid_navgation_title_group);
         mTitleView = (TextView) findViewById(R.id.hybrid_navgation_title);
         mSubTitleView = (TextView) findViewById(R.id.hybrid_navgation_subtitle);
-        mLeftIcon = (DraweeView) findViewById(R.id.hybrid_icon_left);
-        mRightIcon = (DraweeView) findViewById(R.id.hybrid_icon_right);
+        mLeftIcon = (SimpleDraweeView) findViewById(R.id.hybrid_icon_left);
+        mRightIcon = (SimpleDraweeView) findViewById(R.id.hybrid_icon_right);
 
         mLeftIcon.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE);
         mRightIcon.getHierarchy().setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE);
@@ -86,8 +87,8 @@ public class NavgationView extends FrameLayout {
             case RIGHT:
                 mRightView.removeAllViews();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
         return this;
     }
@@ -110,7 +111,7 @@ public class NavgationView extends FrameLayout {
 
     private void appendInner(Direct direct, String label, Object icon, OnClickListener clickListener) {
         ViewGroup viewGroup = (ViewGroup) mInflater.inflate(R.layout.hybrid_navgation_item, direct.equals(Direct.LEFT) ? mLeftView : mRightView, false);
-        DraweeView iconView = (DraweeView) viewGroup.findViewById(R.id.hybrid_icon);
+        SimpleDraweeView iconView = (SimpleDraweeView) viewGroup.findViewById(R.id.hybrid_icon);
         TextView textView = (TextView) viewGroup.findViewById(R.id.hybrid_textview);
         if (icon instanceof String) {
             iconView.setImageURI(Uri.parse((String) icon));
@@ -133,8 +134,8 @@ public class NavgationView extends FrameLayout {
             case RIGHT:
                 mRightView.addView(viewGroup);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 

@@ -18,12 +18,12 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.pm.hybridsdk.widget.DraweeView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/hybrid_icon_left"
             android:layout_width="@dimen/hybrid_navgation_icon_size"
             android:layout_height="@dimen/hybrid_navgation_icon_size"
             android:scaleType="centerInside"
-            fresco:actualImageScaleType="focusCrop" />
+            fresco:actualImageScaleType="centerInside" />
 
         <LinearLayout
             android:id="@+id/hybrid_navgation_title_group"
@@ -46,10 +46,11 @@
                 android:textColor="@android:color/background_dark" />
         </LinearLayout>
 
-        <com.pm.hybridsdk.widget.DraweeView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/hybrid_icon_right"
             android:layout_width="@dimen/hybrid_navgation_icon_size"
             android:layout_height="@dimen/hybrid_navgation_icon_size"
+            fresco:actualImageScaleType="centerInside"
             android:scaleType="centerInside" />
     </LinearLayout>
 
