@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.pm.hybridsdk.BuildConfig;
 import com.pm.hybridsdk.R;
-import com.pm.hybridsdk.core.HyBridWebChromeClient;
-import com.pm.hybridsdk.core.HyBridWebViewClient;
+import com.pm.hybridsdk.core.HybridWebChromeClient;
+import com.pm.hybridsdk.core.HybridWebViewClient;
 import com.pm.hybridsdk.core.HybridConfig;
 import com.pm.hybridsdk.core.HybridJsInterface;
 import com.pm.hybridsdk.widget.HybridWebView;
@@ -36,9 +36,10 @@ import java.io.File;
 public class HybridBaseActivity extends AppCompatActivity {
     private static final String TAG = "HybridBaseActivity";
 
+    protected Style mStyle = Style.LIGHT;
     protected HybridWebView mWebView;
-    protected HyBridWebViewClient mWebViewClient;
-    protected HyBridWebChromeClient mWebChromeClient;
+    protected HybridWebViewClient mWebViewClient;
+    protected HybridWebChromeClient mWebChromeClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +67,9 @@ public class HybridBaseActivity extends AppCompatActivity {
         settings.setDomStorageEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setUserAgentString(settings.getUserAgentString() + " hybrid_1.0.0 ");
-        mWebViewClient = new HyBridWebViewClient(webView);
+        mWebViewClient = new HybridWebViewClient(webView);
         webView.setWebViewClient(mWebViewClient);
-        mWebChromeClient = new HyBridWebChromeClient(this);
+        mWebChromeClient = new HybridWebChromeClient(this);
         webView.setWebChromeClient(mWebChromeClient);
         webView.addJavascriptInterface(new HybridJsInterface(), HybridConfig.JSInterface);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -82,7 +83,11 @@ public class HybridBaseActivity extends AppCompatActivity {
         mWebView.loadUrl(url);
     }
 
-    public void updateNativeUI(Bitmap bitmap,String title){
+    protected void setStyle(Style style) {
+        mStyle = style;
+    }
+
+    public void updateNativeUI(Bitmap bitmap, String title) {
     }
 
     @Override
@@ -115,7 +120,7 @@ public class HybridBaseActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "onActivityResult: requestCode=" + requestCode + "resultCode=" + resultCode + "data=" + data);
         }
-        if (requestCode == HyBridWebChromeClient.REQUEST_SELECT_FILE) {
+        if (requestCode == HybridWebChromeClient.REQUEST_SELECT_FILE) {
             result(resultCode, data);
         }
     }
@@ -206,5 +211,14 @@ public class HybridBaseActivity extends AppCompatActivity {
         }
         mWebChromeClient.getValueCallbacks().onReceiveValue(results);
         mWebChromeClient.clearValueCallbacks();
+    }
+
+    protected enum Style {
+        //亮色的导航栏
+        LIGHT,
+        //暗色的导航栏
+        DARK,
+        //金色的导航栏
+        GOLDEN
     }
 }

@@ -1,7 +1,9 @@
 package com.pm.hybridsdk.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -77,6 +79,11 @@ public class NavgationView extends FrameLayout {
             mRightIcon.setImageURI(Uri.parse(ricon));
         }
         mTitleGroup.setOnClickListener(clickListener);
+    }
+
+    public void setTextColor(@ColorInt int color) {
+        mTitleView.setTextColor(color);
+        mSubTitleView.setTextColor(color);
     }
 
     public NavgationView cleanNavgation(Direct direct) {

@@ -3,14 +3,12 @@ package com.pm.library;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.library.widght.ReFlashListView;
 import com.pm.hybridsdk.core.HybridConstant;
 import com.pm.hybridsdk.ui.HybridWebViewActivity;
 import com.qrcode.SampleActivity;
@@ -22,7 +20,7 @@ public class TestActivity extends AppCompatActivity {
     private static final String TAG = "TestActivity";
     private ListView listview;
     private RelativeLayout activitymain;
-    
+
     private ArrayList<Class> mActivitys;
     private ArrayAdapter<Class> mAdapter;
 
@@ -31,9 +29,9 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         initialize();
-        mActivitys=new ArrayList();
+        mActivitys = new ArrayList();
         initDta();
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1,mActivitys);
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mActivitys);
         listview.setAdapter(mAdapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -41,8 +39,8 @@ public class TestActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Class aClass = mAdapter.getItem(position);
                 Intent intent = new Intent(TestActivity.this, aClass);
-                if(HybridWebViewActivity.class.isAssignableFrom(aClass)){
-                    intent.putExtra(HybridConstant.INTENT_EXTRA_KEY_TOPAGE,"http://www.pmbloger.com/");
+                if (HybridWebViewActivity.class.isAssignableFrom(aClass)) {
+                    intent.putExtra(HybridConstant.INTENT_EXTRA_KEY_TOPAGE, "http://www.pmbloger.com/");
                 }
                 TestActivity.this.startActivity(intent);
             }

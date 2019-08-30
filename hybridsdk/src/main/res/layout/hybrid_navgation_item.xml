@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="4dp">
 
-    <com.pm.hybridsdk.widget.DraweeView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/hybrid_icon"
         android:layout_width="@dimen/hybrid_navgation_icon_size"
         android:layout_height="@dimen/hybrid_navgation_icon_size"

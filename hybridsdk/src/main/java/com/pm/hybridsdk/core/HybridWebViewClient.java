@@ -18,11 +18,11 @@ import java.io.InputStream;
  * Created by vane on 16/6/2.
  */
 
-public class HyBridWebViewClient extends WebViewClient {
+public class HybridWebViewClient extends WebViewClient {
 
     private WebView mWebView;
 
-    public HyBridWebViewClient(WebView webView) {
+    public HybridWebViewClient(WebView webView) {
         this.mWebView = webView;
 
     }

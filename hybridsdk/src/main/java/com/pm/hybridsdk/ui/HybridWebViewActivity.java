@@ -2,9 +2,11 @@ package com.pm.hybridsdk.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -54,13 +56,40 @@ public class HybridWebViewActivity extends HybridBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("vane", "HybridWebViewActivity onCreate");
         EventBus.getDefault().register(this);
         mNavgationView = (NavgationView) findViewById(R.id.hybrid_navgation);
         mProgessbar = (ProgressBar) findViewById(R.id.hybrid_progressbar);
         boolean navgation = getIntent().getBooleanExtra(HybridConstant.INTENT_EXTRA_KEY_HASNAVGATION, true);
         if (navgation) {
-            mNavgationView.appendNavgation(NavgationView.Direct.LEFT, "", R.drawable.ic_back, new View.OnClickListener() {
+            int leftIcon;
+            int rightIcon;
+            switch (mStyle) {
+                case LIGHT:
+                    leftIcon = R.drawable.ic_back_vector;
+                    rightIcon = R.drawable.ic_scan_vector;
+                    mNavgationView.setTextColor(Color.BLACK);
+                    mNavgationView.setBackgroundColor(getResources().getColor(R.color.primary_light));
+                    break;
+                case DARK:
+                    leftIcon = R.drawable.ic_back;
+                    rightIcon = R.drawable.ic_scan;
+                    mNavgationView.setTextColor(Color.WHITE);
+                    mNavgationView.setBackgroundColor(getResources().getColor(R.color.primary_dark));
+                    break;
+                case GOLDEN:
+                    leftIcon = R.drawable.ic_back;
+                    rightIcon = R.drawable.ic_scan;
+                    mNavgationView.setTextColor(Color.WHITE);
+                    mNavgationView.setBackgroundColor(getResources().getColor(R.color.primary_golden));
+                    break;
+                default:
+                    leftIcon = R.drawable.ic_back_vector;
+                    rightIcon = R.drawable.ic_scan_vector;
+                    mNavgationView.setTextColor(Color.BLACK);
+                    mNavgationView.setBackgroundColor(getResources().getColor(R.color.primary_light));
+                    break;
+            }
+            mNavgationView.appendNavgation(NavgationView.Direct.LEFT, "", leftIcon, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mWebView.canGoBack()) {
@@ -70,7 +99,7 @@ public class HybridWebViewActivity extends HybridBaseActivity {
                     }
                 }
             }).setVisibility(View.VISIBLE);
-            mNavgationView.appendNavgation(NavgationView.Direct.RIGHT, "", R.drawable.ic_scan, new View.OnClickListener() {
+            mNavgationView.appendNavgation(NavgationView.Direct.RIGHT, "", rightIcon, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     LaunchDelegate.toActivity(HybridWebViewActivity.this);
@@ -89,7 +118,7 @@ public class HybridWebViewActivity extends HybridBaseActivity {
     public void updateNativeUI(Bitmap bitmap, String title) {
         super.updateNativeUI(bitmap, title);
         if (title == null) {
-            title = "中链融";
+            title = String.valueOf(getPackageManager().getApplicationLabel(getApplicationInfo()));
         }
         mNavgationView.setTitle(title, "", "", "", null);
     }

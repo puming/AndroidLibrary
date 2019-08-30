@@ -22,15 +22,15 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class HyBridWebChromeClient extends WebChromeClient {
-    private static final String TAG = "HyBridWebChromeClient";
+public class HybridWebChromeClient extends WebChromeClient {
+    private static final String TAG = "HybridWebChromeClient";
     private WeakReference<Activity> mActivitys;
     private ValueCallback<Uri> mUploadMessage;
     public ValueCallback<Uri[]> mUploadMessages;
     public static final int REQUEST_SELECT_FILE = 100;
     private String mCameraPhotoPath;
 
-    public HyBridWebChromeClient(Activity activity) {
+    public HybridWebChromeClient(Activity activity) {
         mActivitys = new WeakReference<>(activity);
     }
 
