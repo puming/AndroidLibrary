@@ -30,7 +30,9 @@ import com.pm.hybridsdk.widget.HybridWebView;
 import java.io.File;
 
 /**
- * Created by vane on 16/6/5.
+ *
+ * @author pm
+ * @date 16/6/5
  */
 
 public class HybridBaseActivity extends AppCompatActivity {
@@ -79,8 +81,14 @@ public class HybridBaseActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(url)) {
             return;
         }
-        mWebViewClient.setHostFilter(Uri.parse(url).getHost());
-        mWebView.loadUrl(url);
+        StringBuilder builder = new StringBuilder();
+        if (!url.contains("http")) {
+            builder.append("http").append(":").append("//").append(url);
+        } else {
+            builder.append(url);
+        }
+        mWebViewClient.setHostFilter(Uri.parse(builder.toString()).getHost());
+        mWebView.loadUrl(builder.toString());
     }
 
     protected void setStyle(Style style) {

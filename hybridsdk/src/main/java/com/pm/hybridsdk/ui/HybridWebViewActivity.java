@@ -45,7 +45,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by vane on 16/6/3.
+ *
+ * @author pm
+ * @date 16/6/3
  */
 
 public class HybridWebViewActivity extends HybridBaseActivity {
@@ -176,7 +178,7 @@ public class HybridWebViewActivity extends HybridBaseActivity {
                             return;
                         }
                         String result = bundle.getString(Constant.CODED_CONTENT);
-                        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+                        loadUrl(result);
                     }
                 }
                 break;

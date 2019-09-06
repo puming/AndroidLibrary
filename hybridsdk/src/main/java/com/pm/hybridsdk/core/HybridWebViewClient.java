@@ -15,7 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by vane on 16/6/2.
+ *
+ * @author pm
+ * @date 16/6/2
  */
 
 public class HybridWebViewClient extends WebViewClient {

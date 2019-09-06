@@ -176,7 +176,7 @@ public class CaptureActivity extends AppCompatActivity implements SurfaceHolder.
             public boolean onMenuItemClick(MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.open_photo) {
-                    /*打开相册*/
+                    //通过相册选择系统图片
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_PICK);
                     intent.setType("image/*");

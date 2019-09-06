@@ -21,9 +21,15 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
+/**
+ * @author pm
+ */
 public class HybridWebChromeClient extends WebChromeClient {
     private static final String TAG = "HybridWebChromeClient";
+    private static final String ACCEPT_TYPE_VIDEO = "video";
+    private static final String ACCEPT_TYPE_IMAGE = "image";
     private WeakReference<Activity> mActivitys;
     private ValueCallback<Uri> mUploadMessage;
     public ValueCallback<Uri[]> mUploadMessages;
@@ -42,15 +48,15 @@ public class HybridWebChromeClient extends WebChromeClient {
         Activity activity = mActivitys.get();
         if (activity instanceof HybridBaseActivity) {
             HybridBaseActivity baseActivity = (HybridBaseActivity) activity;
-            baseActivity.updateNativeUI(null,title);
+            baseActivity.updateNativeUI(null, title);
         }
     }
 
     // For Lollipop 5.0+ Devices
-    @Override
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
     public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-        Log.d(TAG, "onShowFileChooser: webView=" + fileChooserParams.toString());
+        String[] acceptTypes = fileChooserParams.getAcceptTypes();
         if (mUploadMessages != null) {
             mUploadMessages.onReceiveValue(null);
             mUploadMessages = null;
@@ -62,7 +68,15 @@ public class HybridWebChromeClient extends WebChromeClient {
             }
         }
         mUploadMessages = filePathCallback;
-        showFileChooser();
+        for (String str : acceptTypes) {
+            if (str.contains(ACCEPT_TYPE_VIDEO)) {
+                showFileChooser(ACCEPT_TYPE_VIDEO);
+                break;
+            } else if (str.contains(ACCEPT_TYPE_IMAGE)) {
+                showFileChooser(ACCEPT_TYPE_IMAGE);
+                break;
+            }
+        }
 
         return true;
     }
@@ -82,18 +96,24 @@ public class HybridWebChromeClient extends WebChromeClient {
         return launched;
     }
 
-    private boolean showFileChooser() {
+    private boolean showFileChooser(String type) {
         Activity activity = mActivitys.get();
         if (activity == null) {
             return false;
         }
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(activity.getPackageManager()) != null) {
+
+        Intent launchSysCameraIntent;
+        if (type.contains(ACCEPT_TYPE_VIDEO)) {
+            launchSysCameraIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        } else {
+            launchSysCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        }
+        if (launchSysCameraIntent.resolveActivity(activity.getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
             try {
-                photoFile = createImageFile();
-                takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
+                photoFile = createImageFile(type);
+                launchSysCameraIntent.putExtra("PhotoPath", mCameraPhotoPath);
             } catch (IOException ex) {
                 // Error occurred while creating the File
                 Log.e(TAG, "Unable to create Image File", ex);
@@ -102,21 +122,32 @@ public class HybridWebChromeClient extends WebChromeClient {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                launchSysCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             } else {
-                takePictureIntent = null;
+                launchSysCameraIntent = null;
             }
         }
-        Log.d(TAG, "showFileChooser: mCameraPhotoPath=" + mCameraPhotoPath);
-
         Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
         contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
         contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        contentSelectionIntent.setType("image/*");
+        if (type.equals(ACCEPT_TYPE_VIDEO)) {
+            contentSelectionIntent.setType("video/*");
+        } else if (type.equals(ACCEPT_TYPE_IMAGE)) {
+            contentSelectionIntent.setType("image/*");
+        }
+
+        Intent intentPickImage = new Intent();
+        intentPickImage.setAction(Intent.ACTION_PICK);
+
+        if (type.equals(ACCEPT_TYPE_VIDEO)) {
+            intentPickImage.setType("video/*");
+        } else if (type.equals(ACCEPT_TYPE_IMAGE)) {
+            intentPickImage.setType("image/*");
+        }
 
         Intent[] intentArray;
-        if (takePictureIntent != null) {
-            intentArray = new Intent[]{takePictureIntent};
+        if (launchSysCameraIntent != null) {
+            intentArray = new Intent[]{launchSysCameraIntent};
         } else {
             intentArray = new Intent[2];
         }
@@ -139,18 +170,37 @@ public class HybridWebChromeClient extends WebChromeClient {
         return true;
     }
 
-    private File createImageFile() throws IOException {
+    private File createImageFile(String type) throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File imageFile = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-        return imageFile;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault());
+        String timeStamp = dateFormat.format(new Date());
+        if (type.equals(ACCEPT_TYPE_VIDEO)) {
+            String imageFileName = "Video_" + timeStamp + "_";
+            File storageDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_MOVIES);
+            File imageFile = File.createTempFile(
+                    /* prefix */
+                    imageFileName,
+                    /* suffix */
+                    ".mp4",
+                    /* directory */
+                    storageDir
+            );
+            return imageFile;
+        } else {
+            String imageFileName = "Image_" + timeStamp + "_";
+            File storageDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File imageFile = File.createTempFile(
+                    /* prefix */
+                    imageFileName,
+                    /* suffix */
+                    ".jpg",
+                    /* directory */
+                    storageDir
+            );
+            return imageFile;
+        }
     }
 
     //For Android 4.1 only
