@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -32,6 +33,16 @@ import java.lang.reflect.Method;
  * checked
  */
 public class DensityUtil {
+
+    /**
+     * Converts a DIP measure into physical pixels.
+     * @param dip The dip value.
+     * @return Returns the number of pixels.
+     */
+    private static float dipToPx(Context c,float dip) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip,
+                c.getResources().getDisplayMetrics());
+    }
 
     public static int dip2px(Context c, float dpValue) {
         final float scale = c.getResources().getDisplayMetrics().density;
