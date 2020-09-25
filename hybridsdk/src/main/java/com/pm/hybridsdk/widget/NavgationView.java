@@ -3,7 +3,7 @@ package com.pm.hybridsdk.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;

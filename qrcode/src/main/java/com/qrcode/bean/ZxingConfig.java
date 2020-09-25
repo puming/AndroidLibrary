@@ -1,6 +1,6 @@
 package com.qrcode.bean;
 
-import android.support.annotation.ColorRes;
+import androidx.annotation.ColorRes;
 
 
 import com.qrcode.R;
