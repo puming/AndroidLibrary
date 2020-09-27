@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/tvShouchi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="手持身份证" />
+
+    <Button
+        android:id="@+id/tvFront"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份证正面" />
+
+    <Button
+        android:id="@+id/tvBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份证反面" />
+
+    <Button
+        android:id="@+id/tvBank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="银行卡" />
+
+    <Button
+        android:id="@+id/tvNone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="正常模式" />
+
+</LinearLayout>

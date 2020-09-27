@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="WhiteActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+
+    <style name="imageFolderAnimator">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_show</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_dismiss</item>
+    </style>
+</resources>

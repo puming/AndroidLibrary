@@ -1,1 +1,1 @@
-include ':app', ':library','qrcode','hybridsdk'
+include ':app', ':library','qrcode','hybridsdk','mediapicker','takephoto'

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pm.takephoto">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <application>
+        <activity
+            android:name=".TakePhotoActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="${applicationId}.action.takephoto" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".CameraActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".LaunchActivity"></activity>
+
+        <provider
+            android:name=".PictureFileProvider"
+            android:authorities="${applicationId}.pictureprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+
+</manifest>
