@@ -2,6 +2,8 @@ package com.pm.hybridsdk.core;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.net.http.SslError;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -116,5 +118,10 @@ public class HybridWebViewClient extends WebViewClient {
             }
         }
         return "text/plain";
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        super.onReceivedSslError(view, handler, error);
     }
 }

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.pm.hybridsdk.core.HybridConstant;
 import com.pm.hybridsdk.ui.HybridWebViewActivity;
+import com.pm.mediapicker.MediaPickerActivity;
 import com.qrcode.SampleActivity;
 
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ public class TestActivity extends AppCompatActivity {
 //        mActivitys.add(ReFlashListViewActivity.class);
         mActivitys.add(SampleActivity.class);
         mActivitys.add(HybridWebViewActivity.class);
+        mActivitys.add(com.pm.takephoto.SampleActivity.class);
+        mActivitys.add(MediaPickerActivity.class);
     }
 
     private void initialize() {

@@ -20,7 +20,7 @@
             android:name=".CameraActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".LaunchActivity"></activity>
+        <activity android:name=".SampleActivity"></activity>
 
         <provider
             android:name=".PictureFileProvider"

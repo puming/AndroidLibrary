@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @date 2019/6/25
  * @email puming@zdsoft.cn
  */
-public class LaunchActivity extends AppCompatActivity implements View.OnClickListener {
+public class SampleActivity extends AppCompatActivity implements View.OnClickListener {
 
     /**
      * 手持身份证
@@ -39,7 +39,7 @@ public class LaunchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
+        setContentView(R.layout.activity_sample);
         initView();
     }
 
