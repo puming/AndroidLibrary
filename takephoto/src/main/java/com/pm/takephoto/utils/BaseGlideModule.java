@@ -12,10 +12,12 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.module.AppGlideModule;
 
 /**
+ * 已经废弃，在library中应该直接使用Glide.with(activity)
  * @author pm
  * @Description 统一管理glide内存大小
  */
-@GlideModule
+@Deprecated
+//@GlideModule
 public class BaseGlideModule extends AppGlideModule {
     private static final String TAG = BaseGlideModule.class.getSimpleName();
 
